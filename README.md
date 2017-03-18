@@ -2,9 +2,12 @@
 
 Guetzling is a simple script for macOS and Linux written in Bash, to automate (recursively finding files) the compression of jpegs using the Guetzli algorithm.
 
-*Install* Guetzli, and copy it to an executable folder (/usr/bin for example). *Do* the same with Guetzling, copy it to /usr/bin or something like that.
+##Install
+1. Install Guetzli, and copy it to an executable folder (`/usr/bin` for example), if it's not already there.
+2. Copy Guetzling, copy it to `/usr/bin` or something like that.
 
-*TO USE*, simply `cd` to the parent directory of your choice, and `guetzling`. **Voilà!**
+##Usage
+1. Simply `cd` to the parent directory of your choice, and `guetzling`. ***Voilà!***
 
 
 [Guetzli](https://github.com/google/guetzli) is a JPEG encoder that aims for excellent compression density at high
