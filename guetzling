@@ -1,10 +1,53 @@
 #!/bin/bash
+
+#Recompress JPG Images
+#Set to false to disable
+JPG=true
+
+#Convert PNG Images
+#Set to false to disable
+#PNGS WILL BE DELETED AFTER CONVERSION
+PNG=true
+
+#Set Quality level
+#Default = 95
+#Max = 100
+#Min = 84
+QUALITY=95
+
 IFS=$'\n';
 FOLDER=$(pwd)
-for f in $(find "$FOLDER" -name '*.jpg')
-#for f in $1/*.jpg
-do
-	echo "Guetzling file - $f..."
-	guetzli -quality 95 "$f" "$f"
-	echo "Done."
-done
+
+if [ $JPG = true ];
+    then
+        for f in $(find "$FOLDER" -name '*.jpg')
+        #for f in $1/*.jpg
+        do
+	        echo "Guetzling file - $f..."
+	        guetzli --quality "$QUALITY" "$f" "$f"
+	        echo "Done."
+        done
+fi
+
+if [ $JPG = true ];
+    then
+        for f in $(find "$FOLDER" -name '*.jpeg')
+        #for f in $1/*.jpeg
+        do
+	        echo "Guetzling file - $f..."
+	        guetzli --quality "$QUALITY" "$f" "$f"
+	        echo "Done."
+        done
+fi
+
+if [ $PNG = true ];
+    then
+        for f in $(find "$FOLDER" -name '*.png')
+        #for f in $1/*.png
+        do
+	        echo "Guetzling file - $f..."
+	        guetzli --quality "$QUALITY" "$f" "${f%.png}.jpg"
+    rm "$f"
+	        echo "Done."
+        done
+fi
