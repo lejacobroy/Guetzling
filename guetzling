@@ -1,19 +1,28 @@
 #!/bin/bash
 
-#Recompress JPG Images
-#Set to false to disable
-JPG=true
-
-#Convert PNG Images
-#Set to false to disable
-#PNGS WILL BE DELETED AFTER CONVERSION
-PNG=true
+#Set Quality level for JPG recompression
+#Default = 95
+#Max = 100
+#Min = 84
+QUALITY_JPG=${1:-95}
 
 #Set Quality level
 #Default = 95
 #Max = 100
 #Min = 84
-QUALITY=95
+QUALITY_PNG=${2:-95}
+
+#Recompress JPG Images
+#Set to false to disable
+JPG=${3:-true}
+
+#Convert PNG Images
+#Set to false to disable
+#PNGS WILL BE DELETED AFTER CONVERSION UNLESS OTHERWISE SPECIFIED
+PNG=${4:-true}
+
+#Remove original PNGS after conversion to JPG
+PNG_DELETE=${5:-true}
 
 IFS=$'\n';
 FOLDER=$(pwd)
@@ -23,8 +32,8 @@ if [ $JPG = true ];
         for f in $(find "$FOLDER" -name '*.jpg')
         #for f in $1/*.jpg
         do
-	        echo "Guetzling file - $f..."
-	        guetzli --quality "$QUALITY" "$f" "$f"
+	        echo "Guetzling file - $f at level '$QUALITY_JPG'..."
+	        guetzli --quality "$QUALITY_JPG" "$f" "$f"
 	        echo "Done."
         done
 fi
@@ -34,9 +43,9 @@ if [ $JPG = true ];
         for f in $(find "$FOLDER" -name '*.jpeg')
         #for f in $1/*.jpeg
         do
-	        echo "Guetzling file - $f..."
-	        guetzli --quality "$QUALITY" "$f" "$f"
-	        echo "Done."
+            echo "Guetzling file - $f at level '$QUALITY_JPG'..."
+            guetzli --quality "$QUALITY_JPG" "$f" "$f"
+            echo "Done."
         done
 fi
 
@@ -45,9 +54,14 @@ if [ $PNG = true ];
         for f in $(find "$FOLDER" -name '*.png')
         #for f in $1/*.png
         do
-	        echo "Guetzling file - $f..."
-	        guetzli --quality "$QUALITY" "$f" "${f%.png}.jpg"
-    rm "$f"
-	        echo "Done."
+	        echo "Guetzling file - $f at level '$QUALITY_PNG' ..."
+	        guetzli --quality "$QUALITY_PNG" "$f" "${f%.png}.jpg"
+            
+            if [ $PNG_DELETE = true ];
+                then
+                    rm "$f"
+            fi
+	        
+            echo "Done."
         done
 fi

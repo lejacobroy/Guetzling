@@ -11,33 +11,45 @@ By design, Guetzling will overwrite and/or delete your original files.  If you w
 ## Usage
 1. Simply `cd` to the parent directory of your choice, and `guetzling`. ***Voilà!***
 
-## Adjustable Options
+## Adjustable Parameters
 
-By opening the script in a text editor, you can adjust certain variables to change the output of Guetzling.
+By Default, Guetzling uses the following options:
+ 
+- JPGs are re-compressed and overwritten
+- PNGs are converted to JPG and the originals are deleted
+- Quality Level is for Guetzli is set to 95
 
-### JPG
+You can adjust these options using bash arguments:
 
-Enable/Disable re-compression of JPG and JPEG files using Guetzling.
+1. Quality for JPG re-compression.
+	- Requires a value between 84 and 100 for Guetzli is designed to fail
+	- Default value is the same as Guetzli: 95
+ 
+ 2. Quality for PNG conversion.
+	- Requires a value between 84 and 100 for Guetzli is designed to fail
+	- Default value is the same as Guetzli: 95
+	
+3.  Compress JPGs
+	- Set to "false" and Guetzliing will ignore JPG/JPEG files, compressing only PNGS.
+	
+4. Compress PNGs
+	- Set to "false" and Guetzling will ignore PNG files, compressing only JPGS
+ 
+ 5.  Delete PNG
+ 	- Set to "false" and Guetzling will keep the copy of any original PNGs in your folder
+ 
 
-	#Recompress JPG Images
-	#Set to false to disable
-	JPG=true
+## Example Usage
+ 
+ Replace all files at quality 95:
+ 
+ 	./guetzling
+ 	
+ Convert JPGs at 95, PNGs at 84, and keep your original PNG files:
+ 
+ 	./guetzling 95 84 true true false
+ 	
+ Convert only JPGs at Quality Level 97:
 
-### PNG
-
-Enable/Disable the conversion of PNG to JPG using Guetzling.
-
-	#Convert PNG Images
-	#Set to false to disable
-	#PNGS WILL BE DELETED AFTER CONVERSION
-	PNG=true
-
-### QUALITY
-
-Change Guetzling/Guetzli Quality Level.
-
-	#Set Quality level
-	#Default = 95
-	#Max = 100
-	#Min = 84
-	QUALITY=95
+	./guetzling 97 95 true false
+  	 
