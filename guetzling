@@ -1,31 +1,90 @@
 #!/bin/bash
+#Guetzling V 1.0.0
+help() { echo -e "
+$(basename $0), Version 1.0.0
+
+Usage example: $(basename $0) -q 90 -j -f ~/photos/output
+
+    -q <84-100>, Sets the Quality, Default is 95
+    -j Recompress ONLY JPG (by default it will also recompress PNG)
+    -p Recompress ONLY PNG (by default it will also recompress JPG)
+    -k Keep the original PNG after conversion (by default it will not)
+    -f <folder> Speficify a folder of images to recompress, including subfolders (right now it's $(pwd)) 
+  " 1>&2; exit 1; }
 
 #Set Quality level for JPG recompression
 #Default = 95
 #Max = 100
 #Min = 84
-QUALITY_JPG=${1:-95}
+QUALITY_JPG=95
 
 #Set Quality level
 #Default = 95
 #Max = 100
 #Min = 84
-QUALITY_PNG=${2:-95}
+QUALITY_PNG=95
 
 #Recompress JPG Images
 #Set to false to disable
-JPG=${3:-true}
+JPG=true
 
 #Convert PNG Images
 #Set to false to disable
 #PNGS WILL BE DELETED AFTER CONVERSION UNLESS OTHERWISE SPECIFIED
-PNG=${4:-true}
+PNG=true
 
 #Remove original PNGS after conversion to JPG
-PNG_DELETE=${5:-true}
+PNG_DELETE=true
+
+#Set the operating folder to pwd
+FOLDER=$(pwd)
+
+while getopts ":q:j:p:k:f:" o; do
+    case "${o}" in
+        q)
+            q=${OPTARG}
+            if ((q >= 84 || q <= 100))
+            then
+                QUALITY_JPG=${q}
+                echo "QUALITY_JPG = ${QUALITY_JPG}"
+            else
+                help
+            fi
+            ;;
+        j)
+            j=${OPTARG}
+            PNG=false
+            echo "Recompressing JPG ONLY"
+            ;;
+        p)
+            p=${OPTARG}
+            JPG=false
+            echo "Recompressing PNG ONLY"
+            ;;
+        k)
+            k=${OPTARG}
+            PNG_DELETE=false
+            echo "Keeping PNG after compression"
+            ;;
+        f)
+            f=${OPTARG}
+            FOLDER=${f}
+            echo "Working in folder ${f}, including subfolders"
+            ;;
+        *)
+            help
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+#if [ -z "${q}" ] || [ -z "${j}" ]; then
+#    help
+#fi
+
+
 
 IFS=$'\n';
-FOLDER=$(pwd)
 
 if [ $JPG = true ];
     then

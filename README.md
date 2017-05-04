@@ -6,7 +6,7 @@ By design, Guetzling will overwrite and/or delete your original files.  If you w
 
 ## Install Guetzli
 1. Install [Guetzli](https://github.com/google/guetzli), via the directions provided at the link.
-2. Copy Guetzling, copy it to `/usr/bin`.
+2. Copy Guetzling to `/usr/bin`.
 
 ## Usage
 1. Simply `cd` to the parent directory of your choice, and `guetzling`. ***Voilà!***
@@ -16,40 +16,36 @@ By design, Guetzling will overwrite and/or delete your original files.  If you w
 By Default, Guetzling uses the following options:
  
 - JPGs are re-compressed and overwritten
-- PNGs are converted to JPG and the originals are deleted
-- Quality Level is for Guetzli is set to 95
+- PNGs are converted to JPG, re-compressed, and the originals are deleted
+- Quality Level is set to 95
 
-You can adjust these options using bash arguments:
+You can adjust these options using flags:
 
-1. Quality for JPG re-compression.
-	- Requires a value between 84 and 100 for Guetzli is designed to fail
-	- Default value is the same as Guetzli: 95
- 
- 2. Quality for PNG conversion.
-	- Requires a value between 84 and 100 for Guetzli is designed to fail
-	- Default value is the same as Guetzli: 95
+-q Quality for JPG or PNG re-compression.
+	- Requires a value between 84 and 100.
+	- Default value is the same as Guetzli: 95.
 	
-3.  Compress JPGs
-	- Set to "false" and Guetzliing will ignore JPG/JPEG files, compressing only PNGS.
+-j Compress JPGs ONLY
+	- Use this flag and Guetzling will ignore PNGs files, compressing only JPGs.
 	
-4. Compress PNGs
-	- Set to "false" and Guetzling will ignore PNG files, compressing only JPGS
+-p Compress PNGs ONLY
+	- Use this flag and Guetzling will ignore JPGs files, compressing only PNGs.
  
- 5.  Delete PNG
- 	- Set to "false" and Guetzling will keep the copy of any original PNGs in your folder
+-k Keep PNG
+ 	- Use this flag and Guetzling will keep original PNGs files, and output compressed JPGs.
  
 
 ## Example Usage
  
- Replace all files at quality 95:
+ Replace all files at quality 95 :
  
  	./guetzling
  	
- Convert JPGs at 95, PNGs at 84, and keep your original PNG files:
+ Convert PNGs at 84, and keep your original PNG files :
  
- 	./guetzling 95 84 true true false
+ 	./guetzling -q 84 -p -k
  	
- Convert only JPGs at Quality Level 97:
+ Convert only JPGs at Quality 97 in /Users/test/photos/output :
 
-	./guetzling 97 95 true false
+	./guetzling -q 97 -j -f /Users/test/photos/output
   	 
