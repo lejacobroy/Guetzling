@@ -5,12 +5,12 @@ Guetzling is a simple script for macOS and Linux written in Bash to automate (re
 By design, Guetzling will overwrite and/or delete your original files.  If you want to keep your originals, make a backup of your folder before using Guetzling.
 
 ## macOS Install
-1. With Homebrew :
- `brew tap lejacobroy/homebrew-guetzling`
- 
- And then,
- 
- `brew install guetzling`.
+With Homebrew :
+
+1. `brew tap lejacobroy/homebrew-guetzling`
+2. `brew install guetzling`.
+
+Or follow the Linux install to do it manualy.
 
 ## Linux Install
 1. Install [Guetzli](https://github.com/google/guetzli), via the directions provided at the link.
